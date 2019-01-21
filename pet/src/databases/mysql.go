@@ -26,8 +26,6 @@ func init() {
 	var err error
 
 	device, config := MYSQLConfig()
-	fmt.Println(device)
-	fmt.Println(config)
 	Eloquent, err = gorm.Open(device, config)
 
 	if err != nil {
