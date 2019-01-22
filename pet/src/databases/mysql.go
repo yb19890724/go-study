@@ -2,10 +2,22 @@ package databases
 
 import (
 	"fmt"
-	"gopkg.in/ini.v1"
 	_ "github.com/go-sql-driver/mysql" //加载mysql
+	"github.com/jinzhu/configor"
 	"github.com/jinzhu/gorm"
 )
+
+var Config = struct {
+	DB struct {
+		Host     	string	`default:"127.0.0.1"`
+		Username    string 	`default:"root"`
+		Password    string  `default:"root"`
+		Port 		string  `default:"3306"`
+		Database 	string  `default:"test"`
+		Charset 	string  `default:"utf8mb4"`
+		Device      string 	`default:"mysql"`
+	}
+}{}
 
 var Eloquent *gorm.DB
 
@@ -14,7 +26,6 @@ func init() {
 	var err error
 
 	device, config := MYSQLConfig()
-
 	Eloquent, err = gorm.Open(device, config)
 
 	if err != nil {
@@ -27,23 +38,27 @@ func init() {
 
 }
 
-func MYSQLConfig() (device string, config string) {
+func MYSQLConfig() (device string, dbConfig string) {
 
-	conf, err := ini.Load("config.ini")
-	if err != nil {
-		fmt.Printf("try load config file[%s] error[%s]\n", "config.ini", err.Error())
-	}
 
-	device = conf.Section("DB_CONNECTION").Key("DEVICE").String()
+	configor.Load(&Config, "src/config.yml")
 
-	host := conf.Section("MYSQL").Key("HOST").String()
-	username := conf.Section("MYSQL").Key( "USERNAME").String()
-	password := conf.Section("MYSQL").Key( "PASSWORD").String()
-	port := conf.Section("MYSQL").Key( "PORT").String()
-	charset := conf.Section("MYSQL").Key( "CHARSET").String()
-	database := conf.Section("MYSQL").Key( "DATABASE").String()
+	device 	 = Config.DB.Device
 
-	config = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s", username, password, host, port, database,charset)
+	host 	 := Config.DB.Host
+	username := Config.DB.Username
+	password := Config.DB.Password
+	port 	 :=	Config.DB.Port
+	charset  := Config.DB.Charset
+	database := Config.DB.Database
 
-	return device, config
+	dbConfig = fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?charset=%s",
+		username,
+		password,
+		host,
+		port,
+		database,
+		charset)
+	return device,dbConfig
 }
