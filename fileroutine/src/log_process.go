@@ -24,14 +24,14 @@ type Writer interface {
 }
 
 type ReadFile struct {
-	path string //读取路径
+	path string // 读取路径
 }
 
 type WriteFile struct {
 	path string
 }
 
-//读取模块
+// 读取模块
 func (r *ReadFile) Read(readChannel chan []byte) {
 
 	f, err := os.Open(r.path)
@@ -40,7 +40,7 @@ func (r *ReadFile) Read(readChannel chan []byte) {
 		panic(fmt.Sprintf("oepn file errpr %s", err.Error()))
 	}
 
-	//从文件末尾开始逐行读取文件内容 (读取最新的内容)
+	// 从文件末尾开始逐行读取文件内容 (读取最新的内容)
 	f.Seek(0, 2)
 	read := bufio.NewReader(f)
 
