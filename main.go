@@ -1,42 +1,43 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
-)
+import "fmt"
+
+// 并发版求素数
 
 func main() {
+	origin, wait := make(chan int), make(chan struct{})
+	Processor(origin,wait)
 	
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, syscall.SIGINT,syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGSTOP, syscall.SIGUSR1)
+	for num :=2;num <10 ;num++{
+		origin <-num
+	}
 	
-	for {
-		s := <-ch
-		switch s {
-		case syscall.SIGINT:
-			fmt.Println("SIGINT")
-			return
-		case syscall.SIGQUIT:
-			fmt.Println("SIGQUIT")
-			return
-		case syscall.SIGSTOP:
-			fmt.Println("SIGSTOP")
-			return
-		case syscall.SIGHUP:
-			fmt.Println("SIGHUP")
-			return
-		case syscall.SIGKILL:
-			fmt.Println("SIGKILL")
-			return
-		case syscall.SIGUSR1:
-			fmt.Println("SIGUSR1")
-			return
-		default:
-			fmt.Println("default")
+	close(origin)
+	<-wait
+}
+
+func Processor(seq chan int,wait chan struct{}){
+	go func() {
+		
+		prime,ok :=<-seq
+		
+		if !ok{
+			close(wait)
 			return
 		}
-	}
+		fmt.Println(prime)
+		
+		out:=make(chan int )
+		
+		Processor(out ,wait)
+		
+		for num:=range seq{
+			if num % prime!=0 {
+				out <-num
+			}
+		}
+		close(out)
+		
+	}()
 }
 
