@@ -2,6 +2,7 @@ module github.com/yb19890724/go-study
 
 require (
 	github.com/Shelnutt2/db2struct v0.0.0-20181222174121-11c43c24bfb2 // indirect
+	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5 // indirect
 	github.com/coreos/etcd v3.3.13+incompatible // indirect
 	github.com/droundy/goopt v0.0.0-20170604162106-0b8effe182da // indirect
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
