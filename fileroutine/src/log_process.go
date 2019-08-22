@@ -84,7 +84,6 @@ func main() {
 
 	fmt.Print(1)
 
-
 	read := &ReadFile{
 		path: "/Users/huangyibing/Home/access.log",
 	}
@@ -92,7 +91,6 @@ func main() {
 	write := &WriteFile{
 		path: "D:\\phpStudy\\PHPTutorial\\nginx\\logs\access.log",
 	}
-
 
 	lp := &LogProcess{
 		readChannel:  make(chan []byte),

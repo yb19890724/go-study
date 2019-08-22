@@ -5,8 +5,8 @@ type LimitError struct {
 	Message string
 }
 
-func NewError (c int ,msg string) error {
-	return &LimitError{Code:c ,Message:msg}
+func NewError(c int, msg string) error {
+	return &LimitError{Code: c, Message: msg}
 }
 
 func (le LimitError) Error() string {

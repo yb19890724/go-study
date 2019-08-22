@@ -17,7 +17,7 @@ func (user User) Insert() (id int64, err error) {
 
 	//添加数据
 	result := orm.Eloquent.Create(&user)
-	id =user.ID
+	id = user.ID
 	if result.Error != nil {
 		err = result.Error
 		return

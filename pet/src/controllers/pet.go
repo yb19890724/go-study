@@ -13,11 +13,11 @@ func Pets(c *gin.Context) {
 	//result, err := Pet.Pets()
 	//
 	//if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    -1,
-			"message": "抱歉未找到相关信息",
-		})
-		return
+	c.JSON(http.StatusOK, gin.H{
+		"code":    -1,
+		"message": "抱歉未找到相关信息",
+	})
+	return
 	//}
 	//
 	//c.JSON(http.StatusOK, gin.H{
@@ -34,11 +34,11 @@ func PetStore(c *gin.Context) {
 	//id, err := Pet.Insert()
 
 	//if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    -1,
-			"message": "添加失败",
-		})
-		return
+	c.JSON(http.StatusOK, gin.H{
+		"code":    -1,
+		"message": "添加失败",
+	})
+	return
 	//}
 	//c.JSON(http.StatusOK, gin.H{
 	//	"code":  1,
@@ -54,11 +54,11 @@ func PetUpdate(c *gin.Context) {
 	//Pet.Password = c.Request.FormValue("password")
 	//result, err := Pet.Update(id)
 	//if err != nil || result.ID == 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    -1,
-			"message": "修改失败",
-		})
-		return
+	c.JSON(http.StatusOK, gin.H{
+		"code":    -1,
+		"message": "修改失败",
+	})
+	return
 	//}
 	//c.JSON(http.StatusOK, gin.H{
 	//	"code":  1,
@@ -72,11 +72,11 @@ func PetDestroy(c *gin.Context) {
 	//id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	//result, err := Pet.Destroy(id)
 	//if err != nil || result.ID == 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"code":    -1,
-			"message": "删除失败",
-		})
-		return
+	c.JSON(http.StatusOK, gin.H{
+		"code":    -1,
+		"message": "删除失败",
+	})
+	return
 	//}
 	//c.JSON(http.StatusOK, gin.H{
 	//	"code":  1,

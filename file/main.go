@@ -1,23 +1,23 @@
 package main
 
 import (
-"bufio"
-"fmt"
-"os"
-"strings"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
 )
 
-func validLines(filename string) (func() (string, bool)) {
-	
+func validLines(filename string) func() (string, bool) {
+
 	file, _ := os.Open(filename)
 	scanner := bufio.NewScanner(file)
-	
+
 	return func() (string, bool) {
 		buff := ""
 		for scanner.Scan() {
 			line := scanner.Text()
 			line = strings.TrimSpace(line)
-			
+
 			if line == "" {
 				continue
 			}
@@ -27,7 +27,7 @@ func validLines(filename string) (func() (string, bool)) {
 			}
 			return buff, true
 		}
-		
+
 		file.Close()
 		return "", false
 	}

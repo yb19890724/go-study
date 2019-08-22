@@ -39,7 +39,7 @@ func (e *EventHandlers) Pub(event Event) {
 			go handler.Handle()
 		}
 	}
-	
+
 }
 
 // 订阅

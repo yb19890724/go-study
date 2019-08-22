@@ -1,6 +1,5 @@
 package msg
 
-
 const (
 	SUCCESS             = 0
 	ORDER_CREATE_FAILED = 1000

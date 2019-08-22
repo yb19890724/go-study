@@ -1,4 +1,5 @@
 package main
+
 import (
 	"fmt"
 	"io"
@@ -7,6 +8,7 @@ import (
 	"os"
 	"time"
 )
+
 func main() {
 	start := time.Now()
 	ch := make(chan string)

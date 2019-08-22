@@ -47,18 +47,17 @@ func ProxyingMiddleware(ctx context.Context, instances string, logger log.Logger
 	logger.Log("proxy_to", fmt.Sprint(instanceList))
 	for _, instance := range instanceList {
 		var e endpoint.Endpoint
-		e = makeUppercaseProxy(ctx, instance)// 创建client
+		e = makeUppercaseProxy(ctx, instance)                                              // 创建client
 		e = circuitbreaker.Gobreaker(gobreaker.NewCircuitBreaker(gobreaker.Settings{}))(e) //添加 breader
 		e = ratelimit.NewErroringLimiter(rate.NewLimiter(rate.Every(time.Second), qps))(e) //添加limiter
 		endpointer = append(endpointer, e)
 	}
 
+	balancer := lb.NewRoundRobin(endpointer) //添加load balancer
 
-	balancer := lb.NewRoundRobin(endpointer)  //添加load balancer
-	
 	// Retry封装一个service load balancer，返回面向特定service method的load balancer。到这个endpoint的请求会自动通过
 	// load balancer进行分配到各个代理服务器中。返回失败的请求会自动retry直到成功或者到达最大失败次数或者超时。
-	retry := lb.Retry(maxAttempts, maxTime, balancer)//添加retry机制
+	retry := lb.Retry(maxAttempts, maxTime, balancer) //添加retry机制
 
 	// 最后，返回由proxymw 实现的ServiceMiddleware。
 	return func(next StringService) StringService {

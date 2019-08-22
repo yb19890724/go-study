@@ -2,7 +2,7 @@ package stringsvc2
 
 import (
 	"time"
-	
+
 	"github.com/go-kit/kit/log"
 )
 
@@ -21,7 +21,7 @@ func (mw LoggingMiddleware) Uppercase(s string) (output string, err error) {
 			"took", time.Since(begin),
 		)
 	}(time.Now())
-	
+
 	output, err = mw.Next.Uppercase(s)
 	return
 }
@@ -35,7 +35,7 @@ func (mw LoggingMiddleware) Count(s string) (n int) {
 			"took", time.Since(begin),
 		)
 	}(time.Now())
-	
+
 	n = mw.Next.Count(s)
 	return
 }

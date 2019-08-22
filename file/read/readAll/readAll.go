@@ -24,9 +24,9 @@ func ReadAll(filePth string) ([]byte, error) {
 //溯源
 //我们来看看它底层到底如何读取的：ReadAll调用了内部方法readAll
 
-func main()  {
-	fileInfo,_:=ReadAll("./read/test.txt")
+func main() {
+	fileInfo, _ := ReadAll("./read/test.txt")
 	fmt.Println(string(fileInfo))
-	fmt.Println(len(fileInfo))// 9
-	fmt.Println(cap(fileInfo))// 16
+	fmt.Println(len(fileInfo)) // 9
+	fmt.Println(cap(fileInfo)) // 16
 }

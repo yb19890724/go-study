@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"flag"
-	`github.com/yb19890724/go-study/gokit/pkg/stringsvc3`
+	"github.com/yb19890724/go-study/gokit/pkg/stringsvc3"
 	"net/http"
 	"os"
 
@@ -57,7 +57,7 @@ func main() {
 		stringsvc3.DecodeUppercaseRequest,
 		stringsvc3.EncodeResponse,
 	)
-	
+
 	countHandler := httptransport.NewServer(
 		stringsvc3.MakeCountEndpoint(svc),
 		stringsvc3.DecodeCountRequest,

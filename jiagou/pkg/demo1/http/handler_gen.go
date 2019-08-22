@@ -1,6 +1,5 @@
 package http
 
-
 import (
 	kithttp "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
@@ -12,6 +11,6 @@ import (
 func NewHTTPHandler(endpoints endpoint.Endpoints, options map[string][]kithttp.ServerOption) http.Handler {
 	m := mux.NewRouter()
 	makeCreateHandler(m, endpoints, options["Create"])
-	
+
 	return m
 }

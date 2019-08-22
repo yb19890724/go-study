@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
-	
+
 	"github.com/urfave/cli"
 )
 
@@ -16,11 +16,11 @@ func init() {
 	cli.AppHelpTemplate += "\nCUSTOMIZED: you bet ur muffins\n"
 	cli.CommandHelpTemplate += "\nYMMV\n"
 	cli.SubcommandHelpTemplate += "\nor something\n"
-	
+
 	cli.HelpFlag = cli.BoolFlag{Name: "halp"}
 	cli.BashCompletionFlag = cli.BoolFlag{Name: "compgen", Hidden: true}
 	cli.VersionFlag = cli.BoolFlag{Name: "print-version, V"}
-	
+
 	cli.HelpPrinter = func(w io.Writer, templ string, data interface{}) {
 		fmt.Fprintf(w, "best of luck to you\n")
 	}
@@ -43,11 +43,11 @@ func (w *hexWriter) Write(p []byte) (int, error) {
 		fmt.Printf("%x", b)
 	}
 	fmt.Printf("\n")
-	
+
 	return len(p), nil
 }
 
-type genericType struct{
+type genericType struct {
 	s string
 }
 
@@ -66,7 +66,7 @@ func main() {
 	app.Version = "19.99.0"
 	app.Compiled = time.Now()
 	app.Authors = []cli.Author{
-		cli.Author{
+		{
 			Name:  "Example Human",
 			Email: "human@example.com",
 		},
@@ -77,7 +77,7 @@ func main() {
 	app.UsageText = "contrive - demonstrating the available API"
 	app.ArgsUsage = "[args and such]"
 	app.Commands = []cli.Command{
-		cli.Command{
+		{
 			Name:        "doo",
 			Aliases:     []string{"do"},
 			Category:    "motion",
@@ -175,23 +175,23 @@ func main() {
 		//cli.ShowCompletions(c)
 		//cli.ShowSubcommandHelp(c)
 		//cli.ShowVersion(c)
-		
+
 		categories := c.App.Categories()
 		categories.AddCommand("sounds", cli.Command{
 			Name: "bloop",
 		})
-		
+
 		for _, category := range c.App.Categories() {
 			fmt.Fprintf(c.App.Writer, "%s --\n", category.Name)
 			fmt.Fprintf(c.App.Writer, "%#v -\n", category.Commands)
 			fmt.Fprintf(c.App.Writer, "%#v -\n", category.VisibleCommands())
 		}
-		
+
 		fmt.Printf("%#v\n", c.App.Command("doo"))
 		if c.Bool("infinite") {
 			c.App.Run([]string{"app", "doo", "wop"})
 		}
-		
+
 		if c.Bool("forevar") {
 			c.App.RunAsSubcommand(c)
 		}
@@ -199,17 +199,17 @@ func main() {
 		fmt.Printf("%#v\n", c.App.VisibleCategories())
 		fmt.Printf("%#v\n", c.App.VisibleCommands())
 		fmt.Printf("%#v\n", c.App.VisibleFlags())
-		
+
 		fmt.Printf("%#v\n", c.Args().First())
 		if len(c.Args()) > 0 {
 			fmt.Printf("%#v\n", c.Args()[1])
 		}
 		fmt.Printf("%#v\n", c.Args().Present())
 		fmt.Printf("%#v\n", c.Args().Tail())
-		
+
 		set := flag.NewFlagSet("contrive", 0)
 		nc := cli.NewContext(c.App, set, c)
-		
+
 		fmt.Printf("%#v\n", nc.Args())
 		fmt.Printf("%#v\n", nc.Bool("nope"))
 		fmt.Printf("%#v\n", nc.BoolT("nerp"))
@@ -233,7 +233,7 @@ func main() {
 		fmt.Printf("%#v\n", nc.GlobalIntSlice("global-blups"))
 		fmt.Printf("%#v\n", nc.GlobalString("global-snurt"))
 		fmt.Printf("%#v\n", nc.GlobalStringSlice("global-snurkles"))
-		
+
 		fmt.Printf("%#v\n", nc.FlagNames())
 		fmt.Printf("%#v\n", nc.GlobalFlagNames())
 		fmt.Printf("%#v\n", nc.GlobalIsSet("wat"))
@@ -241,26 +241,26 @@ func main() {
 		fmt.Printf("%#v\n", nc.NArg())
 		fmt.Printf("%#v\n", nc.NumFlags())
 		fmt.Printf("%#v\n", nc.Parent())
-		
+
 		nc.Set("wat", "also-nope")
-		
+
 		ec := cli.NewExitError("ohwell", 86)
 		fmt.Fprintf(c.App.Writer, "%d", ec.ExitCode())
 		fmt.Printf("made it!\n")
 		return ec
 	}
-	
+
 	if os.Getenv("HEXY") != "" {
 		app.Writer = &hexWriter{}
 		app.ErrWriter = &hexWriter{}
 	}
-	
+
 	app.Metadata = map[string]interface{}{
-		"layers":     "many",
-		"explicable": false,
+		"layers":          "many",
+		"explicable":      false,
 		"whatever-values": 19.99,
 	}
-	
+
 	app.Run(os.Args)
 }
 

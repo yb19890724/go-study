@@ -17,10 +17,9 @@ type AvatarDetail struct {
 	Width      int    `gorm:"column:width"`
 }
 
-
 var dbConf *viper.Viper
 
-func init()  {
+func init() {
 	dbConf, _ = connect.ConnectConfig("database")
 }
 
@@ -33,13 +32,12 @@ func (a *AvatarDetail) BeforeCreate(scope *gorm.Scope) (err error) {
 	return nil
 }
 
-
 // TableName sets the insert table name for this struct type
 func (a *AvatarDetail) TableName(shardKey uint32) string {
-	
-	tn,stc:= dbConf.GetString("AvatarDetail.table_name"),dbConf.GetUint32("AvatarDetail.spli_table_count")
-	
-	return fmt.Sprintf("%s%d",tn ,shardKey%stc)
+
+	tn, stc := dbConf.GetString("AvatarDetail.table_name"), dbConf.GetUint32("AvatarDetail.spli_table_count")
+
+	return fmt.Sprintf("%s%d", tn, shardKey%stc)
 }
 
 // // TableName sets the insert table name for this struct type

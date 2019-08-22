@@ -23,7 +23,7 @@ func makeCreateEndpoint(svc service.OrderService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateRequest)
 		order, err := svc.Create(ctx, req.OrderId)
-		
+
 		return CreateResponse{
 			order,
 			err,

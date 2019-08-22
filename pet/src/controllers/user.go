@@ -24,7 +24,7 @@ func Users(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": 1,
-		"data":   result,
+		"data": result,
 	})
 }
 
@@ -43,7 +43,7 @@ func UserStore(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code":  1,
+		"code":    1,
 		"message": "添加成功",
 		"data":    id,
 	})
@@ -63,7 +63,7 @@ func UserUpdate(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code":  1,
+		"code":    1,
 		"message": "修改成功",
 	})
 }
@@ -81,7 +81,7 @@ func UserDestroy(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code":  1,
+		"code":    1,
 		"message": "删除成功",
 	})
 }

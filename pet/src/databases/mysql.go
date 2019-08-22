@@ -9,13 +9,13 @@ import (
 
 var Config = struct {
 	DB struct {
-		Host     	string	`default:"127.0.0.1"`
-		Username    string 	`default:"root"`
-		Password    string  `default:"root"`
-		Port 		string  `default:"3306"`
-		Database 	string  `default:"test"`
-		Charset 	string  `default:"utf8mb4"`
-		Device      string 	`default:"mysql"`
+		Host     string `default:"127.0.0.1"`
+		Username string `default:"root"`
+		Password string `default:"root"`
+		Port     string `default:"3306"`
+		Database string `default:"test"`
+		Charset  string `default:"utf8mb4"`
+		Device   string `default:"mysql"`
 	}
 }{}
 
@@ -40,16 +40,15 @@ func init() {
 
 func MYSQLConfig() (device string, dbConfig string) {
 
-
 	configor.Load(&Config, "src/config.yml")
 
-	device 	 = Config.DB.Device
+	device = Config.DB.Device
 
-	host 	 := Config.DB.Host
+	host := Config.DB.Host
 	username := Config.DB.Username
 	password := Config.DB.Password
-	port 	 :=	Config.DB.Port
-	charset  := Config.DB.Charset
+	port := Config.DB.Port
+	charset := Config.DB.Charset
 	database := Config.DB.Database
 
 	dbConfig = fmt.Sprintf(
@@ -60,5 +59,5 @@ func MYSQLConfig() (device string, dbConfig string) {
 		port,
 		database,
 		charset)
-	return device,dbConfig
+	return device, dbConfig
 }

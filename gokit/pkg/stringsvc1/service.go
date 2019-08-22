@@ -2,11 +2,10 @@ package stringsvc1
 
 import (
 	"errors"
-	`strings`
+	"strings"
 )
 
 var ErrEmpty = errors.New("empty string")
-
 
 // StringService provides operations on strings.
 type Serviceer interface {

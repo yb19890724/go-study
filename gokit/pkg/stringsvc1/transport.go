@@ -1,11 +1,10 @@
 package stringsvc1
 
 import (
-	`context`
-	`encoding/json`
-	`net/http`
+	"context"
+	"encoding/json"
+	"net/http"
 )
-
 
 // 解析参数
 func DecodeUppercaseRequest(_ context.Context, r *http.Request) (interface{}, error) {

@@ -28,7 +28,7 @@ func (t *Task1Handler) Handle() {
 	time.Sleep(50 * time.Millisecond)
 	fmt.Println("task1 handler end")
 	ehs := eventhandlers.GetInstance()
-	ehs.Pub(task1HasCompleted)// 发布通知已完成
+	ehs.Pub(task1HasCompleted) // 发布通知已完成
 	fmt.Println("task1 pub task1HasCompleted")
 }
 

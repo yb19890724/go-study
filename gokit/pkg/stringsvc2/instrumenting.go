@@ -3,7 +3,7 @@ package stringsvc2
 import (
 	"fmt"
 	"time"
-	
+
 	"github.com/go-kit/kit/metrics"
 )
 
@@ -20,7 +20,7 @@ func (mw InstrumentingMiddleware) Uppercase(s string) (output string, err error)
 		mw.RequestCount.With(lvs...).Add(1)
 		mw.RequestLatency.With(lvs...).Observe(time.Since(begin).Seconds())
 	}(time.Now())
-	
+
 	output, err = mw.Next.Uppercase(s)
 	return
 }
@@ -32,7 +32,7 @@ func (mw InstrumentingMiddleware) Count(s string) (n int) {
 		mw.RequestLatency.With(lvs...).Observe(time.Since(begin).Seconds())
 		mw.CountResult.Observe(float64(n))
 	}(time.Now())
-	
+
 	n = mw.Next.Count(s)
 	return
 }

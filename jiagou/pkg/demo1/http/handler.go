@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/yb19890724/go-study/jiagou/pkg/demo1/endpoint"
-	`github.com/yb19890724/go-study/jiagou/pkg/demo1/msg`
+	"github.com/yb19890724/go-study/jiagou/pkg/demo1/msg"
 	"net/http"
 )
 
@@ -35,11 +35,11 @@ func makeCreateHandler(m *mux.Router, eps endpoint.Endpoints, options []kithttp.
 // 解析请求参数
 func decodeCreateRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request endpoint.CreateRequest
-	
+
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return nil, msg.New(msg.JSON_FORMAT_FAILED)
 	}
-	
+
 	return request, nil
 }
 
@@ -48,7 +48,7 @@ func encodeCreateResponse(ctx context.Context, w http.ResponseWriter, response i
 	if f, ok := response.(kitendpoint.Failer); ok && nil != f.Failed() {
 		return f.Failed()
 	}
-	
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	// 成功的响应
 	json.NewEncoder(w).Encode(responseWrapper{
@@ -56,7 +56,7 @@ func encodeCreateResponse(ctx context.Context, w http.ResponseWriter, response i
 		Message: msg.GetMsg(msg.SUCCESS),
 		Data:    response,
 	})
-	
+
 	return nil
 }
 
@@ -65,13 +65,13 @@ func ErrorEncoder(ctx context.Context, err error, w http.ResponseWriter) {
 	var code int
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(err2code(err))
-	
+
 	if err, ok := err.(msg.Demo1Error); ok {
 		code = err.GetCode()
 	} else {
 		code = -1
 	}
-	
+
 	json.NewEncoder(w).Encode(responseWrapper{
 		Code:    code,
 		Message: err.Error(),

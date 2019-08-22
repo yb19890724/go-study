@@ -1,0 +1,13 @@
+{
+  "Version": "0.0.1",
+  "Hello": {
+    "Name": "hello"
+  },
+  "etcd": {
+    "Addrs": [
+      "127.0.0.1"
+    ],
+    "UserName": "",
+    "Password": ""
+  }
+}

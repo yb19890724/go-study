@@ -1,13 +1,13 @@
 package stringsvc1
 
 import (
-	`context`
-	`github.com/go-kit/kit/endpoint`
+	"context"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
 )
 
 func LoggingMiddleware(logger log.Logger) endpoint.Middleware {
-	
+
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (interface{}, error) {
 			logger.Log("msg", "calling endpoint")
@@ -15,9 +15,8 @@ func LoggingMiddleware(logger log.Logger) endpoint.Middleware {
 			return next(ctx, request)
 		}
 	}
-	
-}
 
+}
 
 // 断点
 

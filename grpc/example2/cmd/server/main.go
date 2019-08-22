@@ -35,13 +35,13 @@ func main() {
 	} else {
 		log.Println("server listen: ", addr)
 	}
-	
+
 	// 创建 gRPC 服务器实例
 	grpcServer := grpc.NewServer()
-	
+
 	// 向 gRPC 服务器注册服务
 	pb.RegisterUserServiceServer(grpcServer, &simpleServer{})
-	
+
 	// 启动 gRPC 服务器
 	// 阻塞等待客户端的调用
 	grpcServer.Serve(listener)

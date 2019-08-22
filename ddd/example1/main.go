@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	
+
 	task1 := new(task.Task1)
 	go task1.Exec()
 	task2 := new(task.Task2)

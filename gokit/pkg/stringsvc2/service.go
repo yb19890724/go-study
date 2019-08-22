@@ -2,7 +2,7 @@ package stringsvc2
 
 import (
 	"errors"
-	`strings`
+	"strings"
 )
 
 // StringService provides operations on strings.

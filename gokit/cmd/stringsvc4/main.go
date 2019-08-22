@@ -4,14 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"log"
-	"strings"
 	"flag"
+	"github.com/nats-io/nats.go"
+	"log"
 	"net/http"
+	"strings"
 
 	"github.com/go-kit/kit/endpoint"
-	natstransport "github.com/go-kit/kit/transport/nats"
 	httptransport "github.com/go-kit/kit/transport/http"
+	natstransport "github.com/go-kit/kit/transport/nats"
 
 	"github.com/nats-io/go-nats"
 )
@@ -56,10 +57,6 @@ type countRequest struct {
 type countResponse struct {
 	V int `json:"v"`
 }
-
-
-
-
 
 // 端点是Go工具包中的主要抽象。端点表示单个RPC（服务接口中的方法）
 func makeUppercaseHTTPEndpoint(nc *nats.Conn) endpoint.Endpoint {
@@ -208,4 +205,3 @@ func decodeCountRequest(_ context.Context, msg *nats.Msg) (interface{}, error) {
 	}
 	return request, nil
 }
-

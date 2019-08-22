@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	pb "github.com/yb19890724/go-study/grpc/example1/proto" // 引入proto包
-	
+
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials" // 引入grpc认证包
@@ -22,24 +22,24 @@ func main() {
 		grpclog.Fatalf("Failed to create TLS credentials %v", err)
 	}
 	conn, err := grpc.Dial(Address, grpc.WithTransportCredentials(creds))
-	
+
 	if err != nil {
 		grpclog.Fatalln(err)
 	}
-	
+
 	defer conn.Close()
-	
+
 	// 初始化客户端
 	c := pb.NewHelloClient(conn)
-	
+
 	// 调用方法
 	reqBody := new(pb.HelloRequest)
 	reqBody.Name = "gRPC"
 	r, err := c.SayHello(context.Background(), reqBody)
-	
+
 	if err != nil {
 		grpclog.Fatalln(err)
 	}
-	
+
 	fmt.Println(r.Message)
 }

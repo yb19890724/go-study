@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	
 )
 
 // go 语言里的合集一般会用map[t]bool 这种形式来表示，T代表元素类型。集合用map类型来标识虽然非常灵活，但我们可以一种更好的形式来标识它，
@@ -14,15 +13,17 @@ import (
 type IntSet struct {
 	words []uint64
 }
+
 // 报告该集合是否包含非负值x。
 func (s *IntSet) Has(x int) bool {
 	word, bit := x/64, uint(x%64)
-	
+
 	fmt.Println(s.words[word])
-	fmt.Println((1<<bit))
-	fmt.Println(s.words[word]&(1<<bit))
+	fmt.Println((1 << bit))
+	fmt.Println(s.words[word] & (1 << bit))
 	return word < len(s.words) && s.words[word]&(1<<bit) != 0
 }
+
 // 添加将非负值x添加到集合中。
 func (s *IntSet) Add(x int) {
 	word, bit := x/64, uint(x%64)
@@ -31,6 +32,7 @@ func (s *IntSet) Add(x int) {
 	}
 	s.words[word] |= 1 << bit
 }
+
 // UnionWith将s设置为s和t的并集。
 func (s *IntSet) UnionWith(t *IntSet) {
 	for i, tword := range t.words {
@@ -69,8 +71,7 @@ func main() {
 	x.Add(144)
 	x.Add(9)
 	fmt.Println(x.Has(9)) // "{1 9 144}"
-	
-	
+
 	// y.Add(9)
 	// y.Add(42)
 	// fmt.Println(y.String()) // "{9 42}"

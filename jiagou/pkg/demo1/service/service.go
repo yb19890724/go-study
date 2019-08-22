@@ -19,24 +19,24 @@ func (os baseOrderService) Create(ctx context.Context, orderId string) (o entity
 	if "" == orderId {
 		return o, msg.New(msg.ORDER_NO_EMPTY)
 	}
-	
+
 	o = entity.Order{
 		Id:     "#" + orderId,
 		Source: "APP",
 		IsPay:  1,
 	}
-	
+
 	return o, nil
 }
 
 // 服务对象实例化，并且组装中间件
 func New(middleware []Middleware) OrderService {
 	var svc = getBaseService()
-	
+
 	for _, m := range middleware {
 		svc = m(svc)
 	}
-	
+
 	return svc
 }
 

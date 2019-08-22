@@ -169,8 +169,7 @@ func main() {
 		thriftServer   = addtransport.NewThriftServer(endpoints)
 		jsonrpcHandler = addtransport.NewJSONRPCHandler(endpoints, logger)
 	)
-	
-	
+
 	//  现在我们到了我们想要实际开始的func main部分
 	//  运行的东西，比如绑定到侦听器的服务器来接收连接。
 	//

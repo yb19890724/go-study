@@ -1,0 +1,8 @@
+addr: 10.10.200.12:10029
+dialTimeout: 200ms
+maxConnAge: 5min
+maxRetries: 1
+minIdleConns: 20
+poolSize: 20
+readTimeout: 200ms
+writeTimeout: 200ms

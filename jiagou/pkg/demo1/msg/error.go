@@ -7,11 +7,11 @@ type Demo1Error struct {
 
 func New(code int) Demo1Error {
 	msg, ok := m[code]
-	
+
 	if !ok {
 		msg = "未知错误"
 	}
-	
+
 	return Demo1Error{
 		code:    code,
 		message: msg,
@@ -25,4 +25,3 @@ func (e Demo1Error) Error() string {
 func (e Demo1Error) GetCode() int {
 	return e.code
 }
-

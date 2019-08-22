@@ -14,10 +14,10 @@ func New(s service.OrderService, mdw map[string][]endpoint.Middleware) Endpoints
 	eps := Endpoints{
 		CreateEndpoint: makeCreateEndpoint(s),
 	}
-	
+
 	for _, m := range mdw["Create"] {
 		eps.CreateEndpoint = m(eps.CreateEndpoint)
 	}
-	
+
 	return eps
 }
