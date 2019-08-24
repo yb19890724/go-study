@@ -1,11 +1,12 @@
 package main
 
 import (
-	. "github.com/yb19890724/go-study/proxy/example1/util"
+	.  "github.com/yb19890724/go-study/proxy/example2/util"
 	"log"
 	"net/http"
 	"net/http/httputil"
-	url2 "net/url"
+	"net/url"
+	"regexp"
 )
 
 type ProxyHandler struct {}
@@ -17,12 +18,18 @@ func(* ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 	
-   lb:=NewLoadBalance()
-   lb.AddServer(NewHttpServer("http://localhost:9091"))
-   lb.AddServer(NewHttpServer("http://localhost:9092"))
-   url,_:=url2.Parse(lb.SelectByRand().Host)
-   proxy:=httputil.NewSingleHostReverseProxy(url)
-   proxy.ServeHTTP(w,r)
+	for k,v:=range ProxyConfigs{
+		if matched,_:=regexp.MatchString(k,r.URL.Path);matched==true{
+			target,_:=url.Parse(v) //v是目标网站地址
+			proxy:=httputil.NewSingleHostReverseProxy(target)
+			proxy.ServeHTTP(w,r)
+		  // RequestUrl(w,r,v)//开始反代处理
+
+			return
+		}
+	}
+
+      w.Write([]byte("default index"))
 
 
 }

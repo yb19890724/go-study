@@ -5,6 +5,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4 // indirect
 	github.com/droundy/goopt v0.0.0-20170604162106-0b8effe182da // indirect
+	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c // indirect
 	github.com/lestrrat-go/apache-logformat v2.0.3+incompatible // indirect
