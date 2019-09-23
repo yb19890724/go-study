@@ -1,72 +1,87 @@
 package main
 
 import (
-	"fmt"
-	"math/rand"
 	"time"
 )
 
-type LoadBalance struct {
-	Services      []*httpServer
-	ServerIndices []int
-	CurIndex      int
-}
+const splitValue = 4294967296
 
-type httpServer struct {
-	Host   string
-	Weight int
-}
-
-func (l *LoadBalance) AddService(hs *httpServer) {
-	l.Services = append(l.Services, hs)
+// 分表
+type Strategy struct {
+	SplitType string // 分表类型
+	RangeStartIndex int // 分表开始索引
+	RangeEndIndex int // 分表开始索引
+	MaxTableIndex int // 表最大索引值
+	Reverse bool // 表最大索引值
+	Limit bool // 表最大索引值
 }
 
 
-// 设置权重
-func (l *LoadBalance) SetServiceWeight() {
-	for index, v := range l.Services {
-		for i := 0; i <= v.Weight; i++ {
-			l.ServerIndices = append(l.ServerIndices, index)
-		}
-	}
-}
-
-// 三个区间
-// [0,3) , [3,5) [5,6)
-// 全部区间[0,6)
-func(l *LoadBalance) SelectByWeightRand2() *httpServer { // 加权随机算法(改良算法)
-
-	var weight int
-	rand.Seed(time.Now().UnixNano())
-	sum:=0
-	for i:=0;i<len(l.Services);i++{
-		sum+=l.Services[i].Weight
-	}
-	rad:=rand.Intn(sum)
+func timeById(value int) int {
 	
-	
-	for index, v :=range l.Services {
-		weight+=v.Weight
-		if rad < weight {
-			return l.Services[index]
-		}
+	if value < splitValue {
+		return 0
 	}
-	return  l.Services[0]
+	
+	formatTime, _ := time.Parse("2006-01-02 15:04:05", "2015-01-01 00:00:00")
+	
+	time := int64((value>>21)/1000) + formatTime.Unix()
+	
+	return int(time)
+}
+
+func indexByTime(t int64) int64 {
+	
+	bt := "2015-11-11 00:00:00"
+	invl := int64(864000)
+	si := int64(24)
+	moi := int64(24)
+	
+	formatTime, _ := time.Parse("2006-01-02 15:04:05", bt)
+	
+	timeGap := t - formatTime.Unix()
+	
+	if timeGap < 0 {
+		return moi
+	}
+	return int64(timeGap)/invl + si
+}
+
+func (s *Strategy) buildRange(start int64, end int64, r bool, l bool) {
+	
+	s.Limit, s.Reverse = l, r
+	
+	mii := int64(0)
+	cmi := time.Now().Unix()
+	mxi := cmi
+	
+	if start > 0 {
+		mii = indexByTime(start)
+	}
+	
+	if end > 0 {
+		mxi = indexByTime(end)
+	}
+	
+	s.rangeStartIndex( mii, mxi)
+	s.rangeEndIndex( mii, mxi)
+	s.MaxTableIndex=int(cmi)
+}
+
+func (s *Strategy) rangeStartIndex( mi int64, mx int64)  {
+	if s.Reverse == true {
+		s.RangeStartIndex = int(mi)
+	}
+	s.RangeStartIndex = int(mx)
+}
+
+func (s *Strategy) rangeEndIndex( mi int64, mx int64)  {
+	if s.Reverse == true {
+		s.RangeEndIndex = int(mx)
+	}
+	s.RangeEndIndex = int(mi)
 }
 
 func main() {
-	
-	var (
-		lb LoadBalance
-	)
-	
-	lb.AddService(&httpServer{"127.0.0.1:8080", 3})
-	lb.AddService(&httpServer{"127.0.0.2:8080", 2})
-	lb.AddService(&httpServer{"127.0.0.3:8080", 1})
-	
-	lb.SetServiceWeight()
-	
-	for i:=1;i<=10 ;i++  {
-		fmt.Println(lb.SelectByWeightRand2())
-	}
+
 }

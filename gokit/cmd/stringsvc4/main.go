@@ -14,7 +14,6 @@ import (
 	httptransport "github.com/go-kit/kit/transport/http"
 	natstransport "github.com/go-kit/kit/transport/nats"
 
-	"github.com/nats-io/go-nats"
 )
 
 // StringService provides operations on strings.

@@ -1,0 +1,14 @@
+syntax ="proto3" ;
+
+package test;
+
+message Test {
+    //姓名
+        string name =1;
+    //体重
+        repeated int32 tizhong =2;
+    //身高
+        int32 shengao =3;
+    //格言
+        string motto =4;
+}

@@ -26,7 +26,8 @@ func main() {
 	if err != nil {
 		grpclog.Fatalln(err)
 	}
-
+	
+	// 延迟关闭连接
 	defer conn.Close()
 
 	// 初始化客户端

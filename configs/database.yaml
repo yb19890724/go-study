@@ -1,0 +1,12 @@
+mysql:
+  cluster:
+    master:
+      conn_max_lifetime: 300
+      dsn: root:root@tcp(192.168.72.188:3306)/default?charset=utf8mb4&loc=Local&parseTime=True
+      max_idle_conns: 5
+      max_open_conns: 20
+    slave:
+      conn_max_lifetime: 300
+      dsn: root:root@tcp(192.168.72.188:3306)/default?charset=utf8mb4&loc=Local&parseTime=True
+      max_idle_conns: 5
+      max_open_conns: 20

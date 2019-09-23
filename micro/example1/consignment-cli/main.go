@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	pb "github.com/yb19890724/go-study/mirco/example1/proto/consignment"
+	pb "github.com/yb19890724/go-study/micro/example1/proto/consignment"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"io/ioutil"
@@ -32,6 +32,7 @@ func main() {
 		log.Fatalf("Did not connect: %v", err)
 	}
 	defer conn.Close()
+	
 	client := pb.NewShippingServiceClient(conn)
 	// Contact the server and print out its response.
 	file := defaultFilename

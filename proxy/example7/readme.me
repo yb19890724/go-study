@@ -7,3 +7,25 @@
 
 > 启动服务 9091,9092
 > run 检查服务
+
+
+#### failover 机制 普通轮询加计数器
+
+FailCount 满足所有次数 down
+SuccesCount 满足连续次数 up
+
+#### 降权机制
+
+server增加 fail weight
+
+每次失败：failweight +=weight*(1/5)
+
+demo:
+权重每次是10
+每次就加2
+
+- 加权轮循过程中
+真正的权重 =weight -Failweight 如果是0不选择
+
+健康检查 一旦成功
+failweight 直接置0
