@@ -9,6 +9,7 @@ import (
 	"github.com/yb19890724/go-study/consul/example3/pkg/configs"
 	"log"
 	"sync"
+	"time"
 )
 
 var dbs *Dbs
@@ -102,6 +103,10 @@ func (d *Dbs) resetDbsConn(ctx context.Context,cancel context.CancelFunc,changCo
 			for index, v := range d.Map{
 				
 				d.delDbsConn(index)
+				
+				// 这里等待是因为，如果请求正在使用db连接直接关闭会报错，这时等待调用结束后在进行关闭
+				// 可以默认判断5秒钟请求如果没有结束，证明是一个不好的请求，所以直接关闭就行了、
+				time.Sleep(5*time.Second)
 				
 				err :=v.Close()// 关闭数据库连接
 				

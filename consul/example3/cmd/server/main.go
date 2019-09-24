@@ -26,7 +26,7 @@ func main() {
 	// 再次到达的请求使用新的连接来连接数据库
 	for {
 		
-		time.Sleep(2*time.Second)
+		time.Sleep(1*time.Second)
 		
 		db, _ := storage.GetMysqlConnection("master", "/cluster/database")
 		
