@@ -79,7 +79,7 @@ func GetConfig(dbName string, dbConfName string) (DbConf, error) {
 		// 获取配置
 		_, conf, err := cs.Get(dbConfName)
 		
-		mConf, err := mysqlFormatConf(conf)
+		mConf, err := MysqlFormatConf(conf)
 		
 		// 读取失败
 		if err != nil {
@@ -94,7 +94,7 @@ func GetConfig(dbName string, dbConfName string) (DbConf, error) {
 }
 
 // 配置格式化
-func mysqlFormatConf(conf []byte) (MysqlClusterConfig, error) {
+func MysqlFormatConf(conf []byte) (MysqlClusterConfig, error) {
 	var mysqlConf MysqlClusterConfig
 	
 	err := yaml.Unmarshal(conf, &mysqlConf)
@@ -126,7 +126,7 @@ func Watch(ctx context.Context,cancel context.CancelFunc,dbConfName string,chang
 		d,ok:=data.(*api.KVPair)
 		
 		if ok {
-			mConf,err:=mysqlFormatConf(d.Value)
+			mConf,err:=MysqlFormatConf(d.Value)
 			// 重置配置
 			if err == nil {
 				fmt.Println("重置配置")

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/consul/api/watch"
-	"github.com/yb19890724/go-study/consul/example3/pkg/storage"
+	"github.com/yb19890724/go-study/consul/example3/pkg/configs"
 	"log"
 )
 
@@ -28,8 +28,8 @@ func newWatch() {
 	watchPlan.Handler = func(idx uint64, data interface{}) {
 		
 		d:=data.(*api.KVPair)
-		
-		mConf,err := storage.FormatConf(d.Value)
+	
+		mConf,err := 	configs.MysqlFormatConf(d.Value)
 		
 		fmt.Println(err)
 		fmt.Println(mConf)
